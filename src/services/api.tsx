@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginSchema } from "../utils/definitions";
+import { LoginSchema, UserList } from "../utils/definitions";
 
 const BASE_URL = "https://reqres.in/api";
 
@@ -28,9 +28,14 @@ export async function logout() {
   return response.data;
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(
+  page: number,
+  perPage: number
+): Promise<UserList> {
   try {
-    const response = await axios.get(`${BASE_URL}/users`);
+    const response = await axios.get(`${BASE_URL}/users`, {
+      params: { page: page, per_page: perPage },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
