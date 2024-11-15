@@ -1,14 +1,16 @@
-import { loginUser } from "../services/api";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { LoginSchema } from "../utils/definitions";
-
-const Form = () => {
+import { LoginResponse, LoginSchema } from "../utils/definitions";
+type FormProps = {
+  isLogin: boolean;
+  submitFunc: (data: LoginSchema) => Promise<LoginResponse>;
+};
+const Form = ({ isLogin, submitFunc }: FormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginSchema>();
-  const onSubmit: SubmitHandler<LoginSchema> = (data) => loginUser(data);
+  const onSubmit: SubmitHandler<LoginSchema> = (data) => submitFunc(data);
 
   return (
     <form
@@ -16,7 +18,7 @@ const Form = () => {
       className="relative w-[400px] h-[520px] bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-10 rounded-lg shadow-lg p-10 flex flex-col justify-center"
     >
       <h3 className="text-2xl font-semibold text-center mb-8">
-        Login to your dashboard
+        {isLogin ? "Login to your dashboard" : "Signup"}
       </h3>
 
       <input
@@ -67,7 +69,7 @@ const Form = () => {
         <p className="errorMsg">Password should be at-least 6 characters.</p>
       )}
 
-      <button type="submit">Login</button>
+      <button type="submit">{isLogin ? "Login" : "Signup"}</button>
     </form>
   );
 };

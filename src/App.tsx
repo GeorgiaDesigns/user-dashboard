@@ -8,6 +8,7 @@ import {
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import AuthProvider, { useAuth } from "./hooks/useAuthentication";
+import Signup from "./pages/signup";
 
 const PrivateRoute = () => {
   const token = useAuth();
@@ -22,9 +23,9 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<PrivateRoute />}></Route>
           </Routes>
         </AuthProvider>
       </Router>
