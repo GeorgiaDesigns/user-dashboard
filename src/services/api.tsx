@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LoginSchema, UserList } from "../utils/definitions";
 
-const BASE_URL = "https://reqres.in/api";
+const BASE_URL = "https://reqres.in/api"; //process.env.REACT_APP_BASE_URL;
 
 export async function loginUser(body: LoginSchema) {
   try {

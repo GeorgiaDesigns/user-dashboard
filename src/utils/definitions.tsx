@@ -14,8 +14,18 @@ export type User = {
   avatar: string;
 };
 
-export type LoginSchema = {
+export interface LoginSchema {
   username: string;
   email: string;
   password: string;
+}
+
+export type LoginResponse = {
+  token: string;
 };
+
+export interface CurrentUserContextData {
+  token: string;
+  loginAction: (data: LoginSchema) => Promise<void>;
+  logout: () => void;
+}
