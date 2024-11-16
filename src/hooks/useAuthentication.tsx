@@ -14,8 +14,10 @@ const AuthContext = createContext<CurrentUserContextData>(
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   //const [user, setUser] = useState<User>();
   const [token, setToken] = useState(localStorage.getItem("tok") || "");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const loginAction = async (data: LoginSchema) => {
+    setLoading(true);
     try {
       const res: LoginResponse = await loginUser(data);
       if (res) {
@@ -27,18 +29,21 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw new Error(res);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = () => {
     // setUser(undefined);
     setToken("");
+
     localStorage.removeItem("tok");
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ token, loginAction, logout }}>
+    <AuthContext.Provider value={{ token, loading, loginAction, logout }}>
       {children}
     </AuthContext.Provider>
   );

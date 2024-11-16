@@ -32,7 +32,6 @@ const usePagination = (
         setLoading(false);
       }
     };
-
     fetchData();
   }, [currentPage, fetchFunc, itemsPerPage]);
 

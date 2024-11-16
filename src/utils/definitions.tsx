@@ -15,7 +15,6 @@ export type User = {
 };
 
 export interface LoginSchema {
-  username: string;
   email: string;
   password: string;
 }
@@ -26,7 +25,8 @@ export type LoginResponse = {
 };
 
 export interface CurrentUserContextData {
-  token: string;
+  token?: string;
+  loading: boolean;
   loginAction: (data: LoginSchema) => Promise<void>;
   logout: () => void;
 }
