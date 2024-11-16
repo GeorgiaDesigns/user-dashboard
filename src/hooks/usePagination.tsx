@@ -41,6 +41,7 @@ const usePagination = (
     currentPage,
     loading,
     users,
+    setUsers,
     totalPages: data?.total_pages,
   };
 };

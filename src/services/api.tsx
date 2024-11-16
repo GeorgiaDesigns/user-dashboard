@@ -13,6 +13,16 @@ export async function loginUser(body: LoginSchema) {
   }
 }
 
+export async function deleteUser(id: string) {
+  try {
+    await axios.delete(`${BASE_URL}/users/${id}`);
+    console.log(`Successfully deleted user with id:${id}`);
+  } catch (error) {
+    console.error("Deletion error:", error);
+    throw error;
+  }
+}
+
 export async function registerUser(body: LoginSchema) {
   try {
     const response = await axios.post(`${BASE_URL}/register`, body);
