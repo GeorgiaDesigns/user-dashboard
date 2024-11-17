@@ -35,9 +35,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         navigate("/dashboard");
         return;
       }
-      throw new Error(res);
     } catch (err) {
       console.error(err);
+      navigate("/signup");
     } finally {
       setLoading(false);
     }

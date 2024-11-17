@@ -8,8 +8,13 @@ export async function loginUser(body: LoginSchema) {
     const response = await axios.post(`${BASE_URL}/login`, body);
     return response.data; // Returns token
   } catch (error) {
-    console.error("Login error:", error);
-    throw error;
+    if (axios.isAxiosError(error))
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.error);
+      } else {
+        console.error("Login error:", error.message || error);
+      }
+    throw new Error("Failed to login");
   }
 }
 
@@ -36,10 +41,16 @@ export async function deleteUser(id: string) {
 export async function registerUser(body: LoginSchema) {
   try {
     const response = await axios.post(`${BASE_URL}/register`, body);
+    if (response.status == 400) alert(response.data.error);
     return response.data; // Returns user id and token
   } catch (error) {
-    console.error("Signup error:", error);
-    throw error;
+    if (axios.isAxiosError(error))
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.error);
+      } else {
+        console.error("Signup error:", error.message || error);
+      }
+    throw new Error("Failed to register user");
   }
 }
 

@@ -16,6 +16,7 @@ export interface User {
 
 export interface LoginSchema {
   email: string;
+  email_confirm?: string;
   password: string;
 }
 
