@@ -36,6 +36,6 @@
     "vite": "^5.4.10"
   },
   "resolutions": {
-    "strip-ansi": "6.0.1"
+    "strip-ansi": "^6.0.1"
   }
 }

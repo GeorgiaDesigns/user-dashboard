@@ -2,6 +2,7 @@ import { RegisterOptions, useForm } from "react-hook-form";
 import { LoginSchema } from "../utils/definitions";
 import Button from "./Button";
 import { useAuth } from "../hooks/useAuthentication";
+import React from "react";
 
 type InputType = {
   id: keyof LoginSchema;
@@ -33,8 +34,8 @@ const Form = ({ submitFunc, inputList, label }: FormProps) => {
     >
       <h3 className="text-2xl font-semibold text-center">{label}</h3>
       <div>
-        {inputList.map((i) => (
-          <>
+        {inputList.map((i, n) => (
+          <React.Fragment key={n}>
             <input
               type={i.type}
               placeholder={i.place_holder}
@@ -52,7 +53,7 @@ const Form = ({ submitFunc, inputList, label }: FormProps) => {
             {errors[i.id] && (
               <p className="errorMsg">{errors[i.id]?.message}</p>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
       <Button type="submit" label={loading ? "...loading" : label} />
