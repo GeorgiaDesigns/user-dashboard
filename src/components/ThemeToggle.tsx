@@ -26,7 +26,10 @@ const ThemeToggle = () => {
 
   return (
     <div className="text-center">
-      <label className="inline-flex items-center cursor-pointer">
+      <label
+        className="inline-flex items-center cursor-pointer"
+        data-test-id="dark-mode-toggle"
+      >
         <input
           type="checkbox"
           value=""

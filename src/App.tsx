@@ -12,7 +12,7 @@ import Signup from "./pages/signup";
 
 const PrivateRoute = () => {
   const { token } = useAuth();
-  if (!token) return <Navigate to="/signup" />;
+  if (!token) return <Navigate to="/login" />;
   return <Outlet />;
 };
 

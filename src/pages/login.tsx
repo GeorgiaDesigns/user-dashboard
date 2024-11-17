@@ -18,8 +18,11 @@ export default function Login() {
               type: "email",
               place_holder: "E-mail",
               validations: {
-                required: true,
-                pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                required: { value: true, message: "Email is required" },
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                  message: "Invalid email format",
+                },
               },
             },
             {
@@ -27,14 +30,21 @@ export default function Login() {
               type: "password",
               place_holder: "Password required",
               validations: {
-                required: true,
-                minLength: 6,
+                required: { value: true, message: "Password is required" },
+                minLength: {
+                  value: 6,
+                  message: "Password is too short",
+                },
               },
             },
           ]}
           label={"Login"}
         />
-        <Button label="Go to Signup" onClick={() => navigate("/signup")} />
+        <Button
+          label="Go to Signup"
+          onClick={() => navigate("/signup")}
+          data-test="signup-button"
+        />
       </div>
     </div>
   );

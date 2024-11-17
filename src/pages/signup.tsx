@@ -26,8 +26,11 @@ export default function Signup() {
               type: "email",
               place_holder: "E-mail",
               validations: {
-                required: true,
-                pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                required: { value: true, message: "Email is required" },
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                  message: "Invalid email format",
+                },
               },
             },
             {
@@ -35,8 +38,7 @@ export default function Signup() {
               type: "email",
               place_holder: "Confirm e-mail",
               validations: {
-                required: true,
-                pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                required: { value: true, message: "Email is required" },
               },
             },
             {
@@ -44,14 +46,21 @@ export default function Signup() {
               type: "password",
               place_holder: "Enter a password",
               validations: {
-                required: true,
-                minLength: 6,
+                required: { value: true, message: "Password is required" },
+                minLength: {
+                  value: 6,
+                  message: "Password must have at least 6 chars",
+                },
               },
             },
           ]}
           label={"Signup"}
         />
-        <Button label="Go to Login" onClick={() => navigate("/signup")} />
+        <Button
+          label="Go to Login"
+          onClick={() => navigate("/login")}
+          data-test="login-button"
+        />
       </main>
     </div>
   );

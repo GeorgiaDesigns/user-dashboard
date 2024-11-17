@@ -11,7 +11,7 @@ const Nav = () => {
         Welcome to the user management dashboard {user && user.first_name}!
       </h1>
       <ThemeToggle />
-      <Button label="Logout" onClick={logout} />
+      <Button label="Logout" onClick={logout} data-test-id="logout-button" />
     </nav>
   );
 };

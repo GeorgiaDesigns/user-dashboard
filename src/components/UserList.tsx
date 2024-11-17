@@ -41,7 +41,11 @@ const UserList = () => {
     <div>
       {loading && <p>Loading...</p>}
       <ul className="grid items-center justify-items-center gap-4 max-h-screen p-4">
-        <Button label={"Create new user"} onClick={() => createNewUser()} />
+        <Button
+          label={"Create new user"}
+          onClick={() => createNewUser()}
+          data-test-id="create-user"
+        />
         {users.map((user) => (
           <li
             key={user.id}
@@ -58,12 +62,14 @@ const UserList = () => {
                   value={editableValue.first_name}
                   onChange={(e) => handleChange(e, "first_name")}
                   className="h-[40px] bg-gray-900 border-gray-900 dark:bg-white dark:bg-opacity-10 bg-opacity-10 rounded-md px-4 text-sm placeholder-gray-950 dark:placeholder-white placeholder-opacity-70 focus:outline-none"
+                  data-test-id="firstname-input"
                 />
                 <input
                   type="text"
                   value={editableValue?.last_name}
                   onChange={(e) => handleChange(e, "last_name")}
                   className="h-[40px] bg-gray-900 border-gray-900 dark:bg-white dark:bg-opacity-10 bg-opacity-10 rounded-md px-4 text-sm placeholder-gray-950 dark:placeholder-white placeholder-opacity-70 focus:outline-none"
+                  data-test-id="lastname-input"
                 />
               </>
             ) : (
@@ -76,6 +82,7 @@ const UserList = () => {
                 value={editableValue?.email}
                 onChange={(e) => handleChange(e, "email")}
                 className="h-[40px] bg-gray-900 border-gray-900 dark:bg-white dark:bg-opacity-10 bg-opacity-10 rounded-md px-4 text-sm placeholder-gray-950 dark:placeholder-white placeholder-opacity-70 focus:outline-none"
+                data-test-id="email-input"
               />
             ) : (
               <p> {user.email}</p>
@@ -84,6 +91,7 @@ const UserList = () => {
               {isEditing === user.id ? (
                 <button
                   id="confirm-edit"
+                  data-test-id="confirm-edit-button"
                   onClick={async () => {
                     await updateUser(user.id);
                     setUsers((current) =>
@@ -106,6 +114,7 @@ const UserList = () => {
               ) : (
                 <button
                   id="editButton"
+                  data-test-id="edit-button"
                   onClick={() => {
                     setEditableValue(user);
                     setIsEditing(user.id);
@@ -128,6 +137,7 @@ const UserList = () => {
               )}
               <button
                 id="delete-user"
+                data-test-id="delete-button"
                 onClick={() => {
                   setUsers((current) =>
                     current.filter((u) => u.id !== user.id)
@@ -151,15 +161,21 @@ const UserList = () => {
         ))}
       </ul>
       <footer className="flex w-full gap-4 items-baseline justify-center inset-x-0">
-        <Button label="Previous" onClick={prev} disabled={currentPage === 1} />
+        <Button
+          label="Previous"
+          onClick={prev}
+          disabled={currentPage === 1}
+          data-test-id="prev-button"
+        />
 
-        <span>
+        <span data-test-id={"page-" + currentPage}>
           Page {currentPage} of {totalPages || "?"}
         </span>
         <Button
           label="Next"
           onClick={next}
           disabled={currentPage === totalPages}
+          data-test-id="next-button"
         />
       </footer>
     </div>
