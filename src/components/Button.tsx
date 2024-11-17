@@ -19,7 +19,7 @@ const Button = ({
       disabled={disabled}
       type={type}
       {...props}
-      className="mt-10 bg-white text-[#080710] p-4 text-lg font-semibold rounded-md hover:bg-opacity-90 transition-all"
+      className="bg-gray-400 text-white dark:bg-blue-500 p-2 text-lg font-semibold rounded-md hover:bg-opacity-90 transition-all"
     >
       {label}
     </button>

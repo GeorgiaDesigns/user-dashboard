@@ -1,6 +1,6 @@
 import { useState } from "react";
 import usePagination from "../hooks/usePagination";
-import { deleteUser, getAllUsers } from "../services/api";
+import { deleteUser, getAllUsers, updateUser } from "../services/api";
 import Button from "./Button";
 import { User } from "../utils/definitions";
 
@@ -29,15 +29,15 @@ const UserList = () => {
         }
     );
   };
-  console.log(editableValue);
+
   return (
     <div>
       {loading && <p>Loading...</p>}
-      <ul className="grid items-center justify-items-center gap-4 max-h-screen sm:p-20">
+      <ul className="grid items-center justify-items-center gap-4 max-h-screen p-4">
         {users.map((user) => (
           <li
             key={user.id}
-            className="flex items-center justify-between p-4 dark:hover:bg-gray-50 max-h-16 w-8/12 bg-gray-500 hover:bg-gray-200 bg-opacity-10 bg-gray-900 dark:text-gray-100 hover:text-gray-900 rounded-md px-4 cursor-pointer	"
+            className="flex items-center justify-between p-4 dark:hover:bg-gray-50 max-h-16 w-8/12 bg-gray-500 hover:bg-gray-200 bg-opacity-30 dark:bg-gray-900 dark:text-gray-100 hover:text-gray-900 rounded-md px-4 cursor-pointer	"
           >
             <img
               src={user.avatar}
@@ -76,8 +76,9 @@ const UserList = () => {
               {isEditing === user.id ? (
                 <button
                   id="confirm-edit"
-                  onClick={() => {
+                  onClick={async () => {
                     setIsEditing("");
+                    await updateUser(user.id);
                     setUsers((current) =>
                       current.map((u) => (u.id === user.id ? editableValue : u))
                     );
@@ -141,7 +142,7 @@ const UserList = () => {
           </li>
         ))}
       </ul>
-      <footer className="absolute flex w-full gap-4 items-baseline justify-center inset-x-0 bottom-10">
+      <footer className="flex w-full gap-4 items-baseline justify-center inset-x-0">
         <Button label="Previous" onClick={prev} disabled={currentPage === 1} />
 
         <span>

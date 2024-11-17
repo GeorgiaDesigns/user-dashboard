@@ -6,13 +6,13 @@ export type UserList = {
   data: User[];
 };
 
-export type User = {
+export interface User {
   id: string;
   email: string;
   first_name: string;
   last_name: string;
   avatar: string;
-};
+}
 
 export interface LoginSchema {
   email: string;
@@ -25,6 +25,7 @@ export type LoginResponse = {
 };
 
 export interface CurrentUserContextData {
+  user?: User;
   token?: string;
   loading: boolean;
   loginAction: (data: LoginSchema) => Promise<void>;

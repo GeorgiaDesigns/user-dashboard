@@ -4,18 +4,25 @@ import {
   CurrentUserContextData,
   LoginResponse,
   LoginSchema,
+  User,
 } from "../utils/definitions";
-import { loginUser } from "../services/api";
+import { getAllUsers, loginUser } from "../services/api";
 
 const AuthContext = createContext<CurrentUserContextData>(
   {} as CurrentUserContextData
 );
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  //const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | undefined>();
   const [token, setToken] = useState(localStorage.getItem("tok") || "");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const getUserByEmail = async (email: string) => {
+    const userList = await getAllUsers();
+    return userList.data.find((u) => u.email === email);
+  };
+
   const loginAction = async (data: LoginSchema) => {
     setLoading(true);
     try {
@@ -23,6 +30,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (res) {
         setToken(res.token);
         localStorage.setItem("tok", res.token);
+        const currentUser = await getUserByEmail(data.email);
+        setUser(currentUser);
         navigate("/dashboard");
         return;
       }
@@ -35,7 +44,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    // setUser(undefined);
+    setUser(undefined);
     setToken("");
 
     localStorage.removeItem("tok");
@@ -43,7 +52,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, loading, loginAction, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, loginAction, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -13,6 +13,16 @@ export async function loginUser(body: LoginSchema) {
   }
 }
 
+export async function updateUser(id: string) {
+  try {
+    await axios.put(`${BASE_URL}/users/${id}`);
+    console.log(`Successfully updated user with id:${id}`);
+  } catch (error) {
+    console.error("Update error:", error);
+    throw error;
+  }
+}
+
 export async function deleteUser(id: string) {
   try {
     await axios.delete(`${BASE_URL}/users/${id}`);
@@ -39,8 +49,8 @@ export async function logout() {
 }
 
 export async function getAllUsers(
-  page: number,
-  perPage: number
+  page?: number,
+  perPage?: number
 ): Promise<UserList> {
   try {
     const response = await axios.get(`${BASE_URL}/users`, {
