@@ -4,15 +4,17 @@ import { deleteUser, getAllUsers, updateUser } from "../services/api";
 import Button from "./Button";
 import { User } from "../utils/definitions";
 
+const EmptyUser: User = {
+  id: "423423",
+  email: "",
+  first_name: "",
+  last_name: "",
+  avatar: "",
+};
+
 const UserList = () => {
   const [isEditing, setIsEditing] = useState("");
-  const [editableValue, setEditableValue] = useState<User>({
-    id: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    avatar: "",
-  });
+  const [editableValue, setEditableValue] = useState<User>(EmptyUser);
 
   const { prev, next, currentPage, loading, users, setUsers, totalPages } =
     usePagination(getAllUsers, 6);
@@ -30,10 +32,16 @@ const UserList = () => {
     );
   };
 
+  const createNewUser = () => {
+    setIsEditing(EmptyUser.id);
+    setUsers((current) => [...current, EmptyUser]);
+  };
+
   return (
     <div>
       {loading && <p>Loading...</p>}
       <ul className="grid items-center justify-items-center gap-4 max-h-screen p-4">
+        <Button label={"Create new user"} onClick={() => createNewUser()} />
         {users.map((user) => (
           <li
             key={user.id}
@@ -77,11 +85,11 @@ const UserList = () => {
                 <button
                   id="confirm-edit"
                   onClick={async () => {
-                    setIsEditing("");
                     await updateUser(user.id);
                     setUsers((current) =>
                       current.map((u) => (u.id === user.id ? editableValue : u))
                     );
+                    setIsEditing("");
                   }}
                 >
                   <svg

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginSchema, UserList } from "../utils/definitions";
+import { LoginSchema, User, UserList } from "../utils/definitions";
 
 const BASE_URL = "https://reqres.in/api"; //process.env.REACT_APP_BASE_URL;
 
@@ -38,7 +38,7 @@ export async function deleteUser(id: string) {
   }
 }
 
-export async function registerUser(body: LoginSchema) {
+export async function registerUser(body: LoginSchema | User) {
   try {
     const response = await axios.post(`${BASE_URL}/register`, body);
     if (response.status == 400) alert(response.data.error);
